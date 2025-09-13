@@ -1,9 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import api from '../../utils/api';
 
 const UserDashboard = () => {
   const [user, setUser] = useState(null);
+  const [unreadAlertsCount, setUnreadAlertsCount] = useState(0);
   const navigate = useNavigate();
+
+  const fetchUnreadAlertsCount = async () => {
+    try {
+      const response = await api.userAPI.getAlerts();
+      if (response.data && response.data.alerts) {
+        const unreadCount = response.data.alerts.filter(alert => !alert.is_read).length;
+        setUnreadAlertsCount(unreadCount);
+      }
+    } catch (error) {
+      console.error('Error fetching alerts count:', error);
+    }
+  };
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -15,6 +29,15 @@ const UserDashboard = () => {
     }
     
     setUser(JSON.parse(storedUser));
+    fetchUnreadAlertsCount();
+
+    // Refresh alerts count when user returns to dashboard
+    const handleFocus = () => {
+      fetchUnreadAlertsCount();
+    };
+
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
   }, [navigate]);
 
   const handleLogout = () => {
@@ -138,17 +161,22 @@ const UserDashboard = () => {
             </div>
 
             <div 
-              className="bg-white overflow-hidden shadow rounded-lg cursor-pointer hover:shadow-lg transition-shadow"
+              className="bg-white overflow-hidden shadow rounded-lg cursor-pointer hover:shadow-lg transition-shadow relative"
               onClick={() => navigate('/user/alerts')}
             >
               <div className="p-6">
                 <div className="flex items-center">
-                  <div className="flex-shrink-0">
+                  <div className="flex-shrink-0 relative">
                     <div className="w-8 h-8 bg-yellow-500 rounded-md flex items-center justify-center">
                       <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
                       </svg>
                     </div>
+                    {unreadAlertsCount > 0 && (
+                      <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
+                        {unreadAlertsCount > 99 ? '99+' : unreadAlertsCount}
+                      </div>
+                    )}
                   </div>
                   <div className="ml-4">
                     <h3 className="text-lg font-medium text-gray-900">Alerts</h3>
