@@ -7,7 +7,7 @@ class Alert(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     message = db.Column(db.Text, nullable=False)
-    type = db.Column(db.Enum('renewal', 'recommendation', 'general', name='alert_type'), nullable=False)
+    type = db.Column(db.Enum('usage_warning', 'billing_reminder', 'plan_expiry', 'system', name='alert_type'), nullable=False)
     is_read = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     

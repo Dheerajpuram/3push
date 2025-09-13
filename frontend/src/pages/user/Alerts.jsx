@@ -144,24 +144,30 @@ const Alerts = () => {
                     <div className="flex-1">
                       <div className="flex items-center">
                         <div className={`flex-shrink-0 mr-3 ${
-                          alert.type === 'renewal' ? 'text-yellow-500' :
-                          alert.type === 'general' ? 'text-blue-500' :
-                          alert.type === 'recommendation' ? 'text-green-500' :
+                          alert.type === 'plan_expiry' ? 'text-yellow-500' :
+                          alert.type === 'system' ? 'text-blue-500' :
+                          alert.type === 'billing_reminder' ? 'text-green-500' :
+                          alert.type === 'usage_warning' ? 'text-red-500' :
                           'text-gray-500'
                         }`}>
-                          {alert.type === 'renewal' && (
+                          {alert.type === 'plan_expiry' && (
                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
                             </svg>
                           )}
-                          {alert.type === 'general' && (
+                          {alert.type === 'system' && (
                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                           )}
-                          {alert.type === 'recommendation' && (
+                          {alert.type === 'billing_reminder' && (
                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                          )}
+                          {alert.type === 'usage_warning' && (
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                           )}
                         </div>
