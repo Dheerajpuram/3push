@@ -254,8 +254,9 @@ def cancel_plan():
         from models.alerts import Alert
         alert = Alert(
             user_id=user_id,
+            title='Plan Cancelled',
             type='system',
-            message=f'Plan Cancelled: Your {active_subscription.plan.name} plan has been cancelled. You will continue to have access until {active_subscription.end_date}.',
+            message=f'Your {active_subscription.plan.name} plan has been cancelled. You will continue to have access until {active_subscription.end_date}.',
             is_read=False
         )
         db.session.add(alert)

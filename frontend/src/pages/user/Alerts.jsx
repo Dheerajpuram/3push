@@ -173,10 +173,10 @@ const Alerts = () => {
                         </div>
                         <div className="flex-1">
                           <h3 className="text-lg font-medium text-gray-900">
-                            {alert.message.split(':')[0]}
+                            {alert.title}
                           </h3>
                           <p className="mt-1 text-sm text-gray-600">
-                            {alert.message.split(':').slice(1).join(':').trim()}
+                            {alert.message}
                           </p>
                           <p className="mt-2 text-xs text-gray-500">
                             {new Date(alert.created_at).toLocaleString()}

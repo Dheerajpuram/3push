@@ -230,8 +230,9 @@ def create_expiry_alerts():
         if not existing_alert:
             alert = Alert(
                 user_id=subscription.user_id,
+                title='Plan Expiring Soon',
                 type='plan_expiry',
-                message=f'Plan Expiring Soon: Your {subscription.plan.name} plan will expire on {subscription.end_date}. Please renew to continue service.',
+                message=f'Your {subscription.plan.name} plan will expire on {subscription.end_date}. Please renew to continue service.',
                 is_read=False
             )
             db.session.add(alert)

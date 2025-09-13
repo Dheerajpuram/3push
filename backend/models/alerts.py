@@ -6,6 +6,7 @@ class Alert(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    title = db.Column(db.String(200), nullable=False)
     message = db.Column(db.Text, nullable=False)
     type = db.Column(db.Enum('usage_warning', 'billing_reminder', 'plan_expiry', 'system', name='alert_type'), nullable=False)
     is_read = db.Column(db.Boolean, default=False)
@@ -15,6 +16,7 @@ class Alert(db.Model):
         return {
             'id': self.id,
             'user_id': self.user_id,
+            'title': self.title,
             'message': self.message,
             'type': self.type,
             'is_read': self.is_read,
